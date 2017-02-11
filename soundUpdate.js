@@ -1,4 +1,10 @@
 $('#play').on('click', function() {
+    if(!oscillatorStarted){
+        // start the oscillato for iosr
+        oscillatorL.start(0);
+        oscillatorR.start(0);
+    }
+    
     $('#play').hide();
     $('#pause').show();
     tone.playing = true;

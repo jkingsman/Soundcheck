@@ -11,6 +11,9 @@ var tone = {
     waveform: 'sine'
 };
 
+// ios only let's us use the audiocontext on user interaction
+var oscillatorStarted = false;
+
 // initialize oscillator
 var AudioContext = window.AudioContext || window.webkitAudioContext;
 var audioCtx = new AudioContext();
