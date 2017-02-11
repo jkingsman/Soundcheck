@@ -3,8 +3,9 @@ $('#play').on('click', function() {
         // start the oscillato for iosr
         oscillatorL.start(0);
         oscillatorR.start(0);
+        oscillatorStarted = true;
     }
-    
+
     $('#play').hide();
     $('#pause').show();
     tone.playing = true;
