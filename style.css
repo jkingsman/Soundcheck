@@ -1,0 +1,50 @@
+.brand-logo {
+    left: 43%;
+}
+
+#play, #pause {
+    width: 100%;
+    margin-top: 8px;
+}
+
+#playL, #pauseL, #playR, #playL {
+    width: 49%;
+    margin-top: 8px;
+}
+
+.container {
+        padding-bottom: 40px; /* Make room for foter */
+}
+
+#footer {
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    height: 4em;
+    width: 100%;
+    padding-top: 4px;
+    background: lightgrey;
+    text-align: center;
+    z-index: 100;
+}
+
+.collapsible-body {
+    padding: 15px;
+}
+
+.range-field {
+    padding-bottom: 0px;
+}
+
+.thumb {
+    display: none;
+}
+
+#rightChannelLabel {
+    float: right;
+}
+
+.macroButton {
+    width: 49%;
+    margin-top: 5px;
+}

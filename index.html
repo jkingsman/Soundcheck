@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Check One Two | Speaker phase testing and mobile tone generator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav>
+        <div class="nav-wrapper cyan darken-4">
+            <span class="brand-logo"><i class="material-icons">volume_up</i>Speaker Testing</span>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <a class="waves-effect waves-light btn green" id="play"><i class="material-icons left">play_circle_outline</i> Play</a>
+            <a class="waves-effect waves-light btn red" id="pause" style="display: none;"><i class="material-icons left">pause_circle_outline</i> Pause</a>
+        </div>
+        <div class="row">
+            <input type="checkbox" id="leftChannel" checked="checked" />
+            <label for="leftChannel">Play Left</label>
+
+            <input type="checkbox" id="rightChannel" checked="checked" />
+            <label for="rightChannel" id="rightChannelLabel">Play Right</label>
+
+            <ul class="collapsible" data-collapsible="expandable">
+                <li>
+                    <div class="collapsible-header active"><i class="material-icons">leak_add</i>Tone Control</div>
+                    <div class="collapsible-body">
+                        <form action="#" id="waveformSelection">
+                            <div class="row">
+                                <div class="col s6">
+                                    <input name="waveform" type="radio" id="sine" value="sine" checked />
+                                    <label for="sine">Sine</label><br />
+
+                                    <input name="waveform" type="radio" id="square" value="square" />
+                                    <label for="square">Square</label>
+                                </div>
+                                <div class="col s6">
+                                    <input name="waveform" type="radio" id="sawtooth" value="sawtooth" />
+                                    <label for="sawtooth">Sawtooth</label><br />
+
+                                    <input name="waveform" type="radio" id="triangle" value="triangle" />
+                                    <label for="triangle">Triangle</label>
+                                </div>
+                            </div>
+
+
+                            <br />
+
+                        </form>
+
+                        <div class="divider"></div>
+
+                        <label>Volume<input type="range" id="volume" min="0" max="100" value="100" /></label>
+
+                        <div class="divider"></div>
+
+                        <p class="range-field">
+                            <label>Frequency<input type="range" id="frequency" min="0" max="20000" value="440" step="10"/></label>
+                        </p>
+
+                        <div class="divider"></div>
+
+                        <form action="#" id="phaseSelection">
+                            <label>Right Channel Phase Offset</label><br />
+                            <input name="phase" type="radio" id="inphase" value="0" checked />
+                            <label for="inphase">0&pi; (0&deg;)</label>
+
+                            <input name="phase" type="radio" id="90deg" value=".5" />
+                            <label for="90deg">&pi;/2 (90&deg;)</label>
+
+                            <input name="phase" type="radio" id="180deg" value="1" />
+                            <label for="180deg">&pi; (180&deg;)</label>
+                        </form>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">play_arrow</i>Macros</div>
+                    <div class="collapsible-body">
+                        <label>Frequency Shortcuts</label><br />
+                        <a class="waves-effect waves-light btn blue macroButton"> 80Hz</a>
+                        <a class="waves-effect waves-light btn blue macroButton"> 440Hz</a>
+                        <a class="waves-effect waves-light btn blue macroButton"> 10kHz</a>
+                        <a class="waves-effect waves-light btn blue macroButton"> 15kHz</a>
+
+                        <label>Sweeps</label><br />
+                        <a class="waves-effect waves-light btn blue macroButton"> 0-100Hz</a>
+                        <a class="waves-effect waves-light btn blue macroButton"> 100Hz-400Hz</a>
+                        <a class="waves-effect waves-light btn blue macroButton"> 400Hz-1kHz</a>
+                        <a class="waves-effect waves-light btn blue macroButton"> 1kHz-5kHz</a>
+                        <a class="waves-effect waves-light btn blue macroButton"> 5kHz-10kHz</a>
+                        <a class="waves-effect waves-light btn blue macroButton"> 10kHz-20kHz</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div id="footer"><span id="statusFreq"></span>Hz <span id="statusWaveform"> </span> wave (<span id="statusPhase"></span>)<br /><span id="statusPlaying"></span>, <span id="statusVolume"></span>% volume, <span id="statusChannels"></span> output</div>
+    </div>
+
+    <!-- Compiled and minified JavaScript -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    <script src="soundCore.js"></script>
+    <script src="soundUpdate.js"></script>
+</body>
+
+</html>
