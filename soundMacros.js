@@ -72,10 +72,14 @@ function LRPulse() {
     }, 1000);
 }
 
-function stopAllSound() {
+function stopMacros(){
     // clear all interval
     clearInterval(sweepInterval);
     clearInterval(pulseInterval);
+}
+
+function stopAllSound() {
+    stopMacros();
 
     // restore channel selection UI
     $('#leftChannel').prop('checked', true);

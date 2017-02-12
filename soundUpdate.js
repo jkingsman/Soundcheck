@@ -29,10 +29,18 @@ $('#waveformSelection #phaseSelection').on('change', function() {
     setTone();
 });
 
-// set frequency and volume
-$('#frequency #volume').on('input', function() {
-    tone.frequency = Number($('#frequency').val());
+// set volume
+$('#volume').on('input', function() {
     tone.volume = Number($('#volume').val());
+    setTone();
+});
+
+// set frequency
+$('#frequency').on('input', function() {
+    // cancel macros if we're going freeform
+    stopMacros();
+    
+    tone.frequency = Number($('#frequency').val());
     setTone();
 });
 
