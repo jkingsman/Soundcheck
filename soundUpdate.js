@@ -4,9 +4,7 @@ $('#play').on('click', function() {
 });
 
 $('#pause').on('click', function() {
-    clearAllMacros();
-    tone.playing = false;
-    setTone();
+    stopAllSound();
 });
 
 $('#rightChannel').on('click', function() {
