@@ -11,17 +11,17 @@ function sweep(startFreq, endFreq, seconds){
     clearInterval(sweepInterval);
 
     var interval = endFreq - startFreq;
-    var step = (seconds * 100) / interval;
+    var step = interval / (seconds * 100);
     playTone(startFreq);
     sweepInterval = setInterval(function(){
         playTone(tone.frequency + step);
-        if(tone.frequency >= endFreq){
+        if(tone.frequency > endFreq){
             playTone(endFreq);
             clearInterval(sweepInterval);
             tone.playing = false;
             setTone();
         }
-    }, 100);
+    }, 10);
 }
 
 var pulseInterval;
