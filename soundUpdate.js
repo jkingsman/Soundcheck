@@ -1,3 +1,4 @@
+// handle play and pause
 $('#play').on('click', function() {
     tone.playing = true;
     setTone();
@@ -7,45 +8,37 @@ $('#pause').on('click', function() {
     stopAllSound();
 });
 
-$('#rightChannel').on('click', function() {
+// handle speaker selection
+$('#rightChannel #leftChannel').on('click', function() {
+    tone.channels.right = tone.channels.left = false;
     if ($('#rightChannel').prop('checked')) {
         tone.channels.right = true;
-    } else {
-        tone.channels.right = false;
     }
-    setTone();
-});
 
-$('#leftChannel').on('click', function() {
     if ($('#leftChannel').prop('checked')) {
         tone.channels.left = true;
-    } else {
-        tone.channels.left = false;
     }
+
     setTone();
 });
 
-$('#waveformSelection').on('change', function() {
+// set waveform and phase
+$('#waveformSelection #phaseSelection').on('change', function() {
     tone.waveform = $("input[name='waveform']:checked")[0].value;
-    setTone();
-});
-
-$('#phaseSelection').on('change', function() {
     tone.phase = $("input[name='phase']:checked")[0].value;
     setTone();
 });
 
-$('#volume').on('input', function() {
-    tone.volume = $('#volume').val();
+// set frequency and volume
+$('#frequency #volume').on('input', function() {
+    tone.frequency = Number($('#frequency').val());
+    tone.volume = Number($('#volume').val());
     setTone();
 });
 
-$('#frequency').on('input', function() {
-    tone.frequency = $('#frequency').val();
-    setTone();
-});
-
+// draw the status bar at the bottom
 function drawStatus() {
+    // show the appropriate play/pause button
     if (tone.playing) {
         $('#play').hide();
         $('#pause').show();
@@ -54,13 +47,17 @@ function drawStatus() {
         $('#pause').hide();
     }
 
+    // round off frequency
     $('#statusFreq').text(Math.round(tone.frequency * 1000) / 1000);
-    $('#statusPhase').html(tone.phase == 0 ? 'in phase' : tone.phase + '&pi; out of phase');
+
+    // show pi multiples out of phase
+    $('#statusPhase').html(tone.phase === 0 ? 'in phase' : tone.phase + '&pi; out of phase');
+
     $('#statusPlaying').text(tone.playing ? 'Playing' : 'Paused');
     $('#statusVolume').text(tone.volume);
     $('#statusWaveform').text(tone.waveform);
 
-    // hand channel settings
+    // show channel settings
     var channels = '';
     if (tone.channels.left) {
         channels += 'L';
@@ -77,5 +74,5 @@ function drawStatus() {
     $('#statusChannels').text(channels);
 }
 
-// initial draw
+// initial draw on page load
 drawStatus();
