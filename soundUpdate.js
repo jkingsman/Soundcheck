@@ -56,7 +56,7 @@ function drawStatus() {
         $('#pause').hide();
     }
 
-    $('#statusFreq').text(Math.round(tone.frequency));
+    $('#statusFreq').text(Math.round(tone.frequency * 1000) / 1000);
     $('#statusPhase').html(tone.phase == 0 ? 'in phase' : tone.phase + '&pi; out of phase');
     $('#statusPlaying').text(tone.playing ? 'Playing' : 'Paused');
     $('#statusVolume').text(tone.volume);

@@ -9,7 +9,7 @@ var sweepInterval;
 
 function sweep(startFreq, endFreq, seconds) {
     // start with a clean slate
-    clearInterval(sweepInterval);
+    clearAllMacros();
 
     var interval = endFreq - startFreq;
     var step = interval / (seconds * 100);
@@ -28,6 +28,9 @@ function sweep(startFreq, endFreq, seconds) {
 var pulseInterval;
 
 function LRPulse() {
+    // start with a clean slate
+    clearAllMacros();
+    
     // set base case
     var pulse = 1;
     tone.channels.left = true;
