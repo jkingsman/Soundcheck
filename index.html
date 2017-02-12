@@ -85,16 +85,16 @@
                     <div class="collapsible-body">
                         <a class="waves-effect waves-light btn orange panicButton" onclick="stopAllSound();">Stop All Macros</a>
                         <label>Frequency Shortcuts</label><br />
-                        <a class="waves-effect waves-light btn blue macroButton" onclick="playTone(80);">80Hz</a>
-                        <a class="waves-effect waves-light btn blue macroButton" onclick="playTone(440);">440Hz</a>
-                        <a class="waves-effect waves-light btn blue macroButton" onclick="playTone(1000);">1kHz</a>
-                        <a class="waves-effect waves-light btn blue macroButton" onclick="playTone(15000);">15kHz</a>
+                        <a class="waves-effect waves-light btn blue macroButton" onclick="stopAllSound(); playTone(80);">80Hz</a>
+                        <a class="waves-effect waves-light btn blue macroButton" onclick="stopAllSound(); playTone(440);">440Hz</a>
+                        <a class="waves-effect waves-light btn blue macroButton" onclick="stopAllSound(); playTone(1000);">1kHz</a>
+                        <a class="waves-effect waves-light btn blue macroButton" onclick="stopAllSound(); playTone(15000);">15kHz</a>
 
                         <label>Tuning</label><br />
-                        <a class="waves-effect waves-light btn blue macroButton" onclick="playTone(440);">A4 (Concert)</a>
-                        <a class="waves-effect waves-light btn blue macroButton" onclick="playTone(466.164);">B&#9837 4</a>
-                        <a class="waves-effect waves-light btn blue macroButton" onclick="playTone(349.228);">F4</a>
-                        <a class="waves-effect waves-light btn blue macroButton" onclick="playTone(311.127);">E&#9837 4</a>
+                        <a class="waves-effect waves-light btn blue macroButton" onclick="stopAllSound(); playTone(440);">A4 (Concert)</a>
+                        <a class="waves-effect waves-light btn blue macroButton" onclick="stopAllSound(); playTone(466.164);">B&#9837 4</a>
+                        <a class="waves-effect waves-light btn blue macroButton" onclick="stopAllSound(); playTone(349.228);">F4</a>
+                        <a class="waves-effect waves-light btn blue macroButton" onclick="stopAllSound(); playTone(311.127);">E&#9837 4</a>
 
                         <label>Sweeps</label><br />
                         <a class="waves-effect waves-light btn blue macroButton" onclick="sweep(0, 100, 10);">0-100Hz</a>
