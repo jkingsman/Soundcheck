@@ -56,8 +56,12 @@ function LRPulse() {
 function clearAllMacros() {
     clearInterval(sweepInterval);
     clearInterval(pulseInterval);
+
     $('#leftChannel').prop('checked', true);
     $('#rightChannel').prop('checked', true);
+
     tone.channels.left = true;
     tone.channels.right = true;
+    tone.playing = false;
+    setTone();
 }
