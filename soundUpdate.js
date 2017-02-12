@@ -65,7 +65,7 @@ function drawStatus() {
     }
 
     // round off frequency
-    $('#statusFreq').text((Math.round(tone.frequency * 1000) / 1000).toFixed(3));
+    $('#statusFreq').text((Math.round(tone.frequency * 100) / 100).toFixed());
 
     // show pi multiples out of phase
     $('#statusPhase').html(tone.phase === 0 ? 'in phase' : tone.phase + '&pi; out of phase');
