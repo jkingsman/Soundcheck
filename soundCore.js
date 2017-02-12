@@ -12,40 +12,39 @@ var tone = {
 };
 
 // ios only let's us use the audiocontext on user interaction
-var oscillatorStarted = false;
+var initialized = false;
 
 // initialize oscillator
-var AudioContext = window.AudioContext || window.webkitAudioContext;
-var audioCtx = new AudioContext();
-var oscillatorL = audioCtx.createOscillator();
-var oscillatorR = audioCtx.createOscillator();
+var AudioContext, audioCtx, oscillatorL, oscillatorR, gainNodeL, gainNodeR, panNodeL, panNodeR;
+function initializeOscillators(){
+    AudioContext = window.AudioContext || window.webkitAudioContext;
+    audioCtx = new AudioContext();
+    oscillatorL = audioCtx.createOscillator();
+    oscillatorR = audioCtx.createOscillator();
 
-// connect gain
-var gainNodeL = audioCtx.createGain();
-oscillatorL.connect(gainNodeL);
+    // connect gain
+    gainNodeL = audioCtx.createGain();
+    oscillatorL.connect(gainNodeL);
 
-var gainNodeR = audioCtx.createGain();
-oscillatorR.connect(gainNodeR);
+    gainNodeR = audioCtx.createGain();
+    oscillatorR.connect(gainNodeR);
 
-// connect panners to gain and connect pannets to output
-var panNodeL = audioCtx.createStereoPanner();
-panNodeL.pan.value = -1;
-gainNodeL.connect(panNodeL);
-panNodeL.connect(audioCtx.destination);
+    // connect panners to gain and connect pannets to output
+    panNodeL = audioCtx.createStereoPanner();
+    panNodeL.pan.value = -1;
+    gainNodeL.connect(panNodeL);
+    panNodeL.connect(audioCtx.destination);
 
-var panNodeR = audioCtx.createStereoPanner();
-panNodeR.pan.value = 1;
-gainNodeR.connect(panNodeR);
-panNodeR.connect(audioCtx.destination);
+    panNodeR = audioCtx.createStereoPanner();
+    panNodeR.pan.value = 1;
+    gainNodeR.connect(panNodeR);
+    panNodeR.connect(audioCtx.destination);
 
-// set defaults
-oscillatorL.type = oscillatorR.type = 'sine';
-oscillatorL.frequency.value = oscillatorR.frequency.value = 440;
-gainNodeL.gain.value = gainNodeR.gain.value = 0;
-
-// start the oscillator
-oscillatorL.start(0);
-oscillatorR.start(0);
+    // set defaults
+    oscillatorL.type = oscillatorR.type = 'sine';
+    oscillatorL.frequency.value = oscillatorR.frequency.value = 440;
+    gainNodeL.gain.value = gainNodeR.gain.value = 0;
+}
 
 // handle all changes to the oscillator
 function setTone() {

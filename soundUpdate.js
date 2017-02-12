@@ -1,9 +1,9 @@
 $('#play').on('click', function() {
-    if(!oscillatorStarted){
+    if(!initialized){
         // start the oscillato for iosr
-        oscillatorL.start(0);
-        oscillatorR.start(0);
-        oscillatorStarted = true;
+        initialized = true;
+        // oscillatorL.start(0);
+        // oscillatorR.start(0);
     }
 
     $('#play').hide();
