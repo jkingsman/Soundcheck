@@ -11,43 +11,51 @@ var tone = {
     waveform: 'sine'
 };
 
-// ios only let's us use the audiocontext on user interaction
-var initialized = false;
-
-// initialize oscillator
-var AudioContext, audioCtx, oscillatorL, oscillatorR, gainNodeL, gainNodeR, panNodeL, panNodeR;
-function initializeOscillators(){
-    AudioContext = window.AudioContext || window.webkitAudioContext;
-    audioCtx = new AudioContext();
-    oscillatorL = audioCtx.createOscillator();
-    oscillatorR = audioCtx.createOscillator();
-
-    // connect gain
-    gainNodeL = audioCtx.createGain();
-    oscillatorL.connect(gainNodeL);
-
-    gainNodeR = audioCtx.createGain();
-    oscillatorR.connect(gainNodeR);
-
-    // connect panners to gain and connect pannets to output
-    panNodeL = audioCtx.createStereoPanner();
-    panNodeL.pan.value = -1;
-    gainNodeL.connect(panNodeL);
-    panNodeL.connect(audioCtx.destination);
-
-    panNodeR = audioCtx.createStereoPanner();
-    panNodeR.pan.value = 1;
-    gainNodeR.connect(panNodeR);
-    panNodeR.connect(audioCtx.destination);
-
-    // set defaults
-    oscillatorL.type = oscillatorR.type = 'sine';
-    oscillatorL.frequency.value = oscillatorR.frequency.value = 440;
-    gainNodeL.gain.value = gainNodeR.gain.value = 0;
+// initialize oscillator -- have to a have a function so we can call it on user interaction
+// iOS won't let us generate sound unless it's based directly on user interaction
+var AudioContext, audioctx, oscillatorL, oscillatorR, gainNodeL, gainNodeR, panNodeL, panNodeR;
+var audioInitialized = false;
+function initializeAudio(){
+  AudioContext = window.AudioContext || window.webkitAudioContext;
+  audioCtx = new AudioContext();
+  oscillatorL = audioCtx.createOscillator();
+  oscillatorR = audioCtx.createOscillator();
+  
+  // connect gain
+  gainNodeL = audioCtx.createGain();
+  oscillatorL.connect(gainNodeL);
+  
+  gainNodeR = audioCtx.createGain();
+  oscillatorR.connect(gainNodeR);
+  
+  // connect panners to gain and connect pannets to output
+  panNodeL = audioCtx.createStereoPanner();
+  panNodeL.pan.value = -1;
+  gainNodeL.connect(panNodeL);
+  panNodeL.connect(audioCtx.destination);
+  
+  panNodeR = audioCtx.createStereoPanner();
+  panNodeR.pan.value = 1;
+  gainNodeR.connect(panNodeR);
+  panNodeR.connect(audioCtx.destination);
+  
+  // set defaults
+  oscillatorL.type = oscillatorR.type = 'sine';
+  oscillatorL.frequency.value = oscillatorR.frequency.value = 440;
+  gainNodeL.gain.value = gainNodeR.gain.value = 0;
+  
+  // start the oscillator
+  oscillatorL.start(0);
+  oscillatorR.start(0);
 }
 
 // handle all changes to the oscillator
 function setTone() {
+  if(!audioInitialized){
+    audioInitialized = true;
+    initializeAudio();
+  }
+  
     if (tone.playing) {
         if(tone.channels.left){
             gainNodeL.gain.value = tone.volume / 100;
