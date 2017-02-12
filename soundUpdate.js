@@ -1,13 +1,10 @@
-$('#play').on('mousedown', function() {
-    $('#play').hide();
-    $('#pause').show();
+$('#play').on('click', function() {
     tone.playing = true;
     setTone();
 });
 
 $('#pause').on('click', function() {
-    $('#play').show();
-    $('#pause').hide();
+    clearAllMacros();
     tone.playing = false;
     setTone();
 });
@@ -51,7 +48,15 @@ $('#frequency').on('input', function() {
 });
 
 function drawStatus() {
-    $('#statusFreq').text(tone.frequency);
+    if(tone.playing){
+        $('#play').hide();
+        $('#pause').show();
+    } else {
+        $('#play').show();
+        $('#pause').hide();
+    }
+
+    $('#statusFreq').text(Math.round(tone.frequency));
     $('#statusPhase').html(tone.phase == 0 ? 'in phase' : tone.phase + '&pi; out of phase');
     $('#statusPlaying').text(tone.playing ? 'Playing' : 'Paused');
     $('#statusVolume').text(tone.volume);

@@ -13,57 +13,54 @@ var tone = {
 
 // initialize oscillator -- have to a have a function so we can call it on user interaction
 // iOS won't let us generate sound unless it's based directly on user interaction
-var AudioContext, audioctx, oscillatorL, oscillatorR, gainNodeL, gainNodeR, panNodeL, panNodeR;
+var AudioContext, audioCtx, oscillatorL, oscillatorR, gainNodeL, gainNodeR, mergerNode;
+
 var audioInitialized = false;
-function initializeAudio(){
-  AudioContext = window.AudioContext || window.webkitAudioContext;
-  audioCtx = new AudioContext();
-  oscillatorL = audioCtx.createOscillator();
-  oscillatorR = audioCtx.createOscillator();
-  
-  // connect gain
-  gainNodeL = audioCtx.createGain();
-  oscillatorL.connect(gainNodeL);
-  
-  gainNodeR = audioCtx.createGain();
-  oscillatorR.connect(gainNodeR);
-  
-  // connect panners to gain and connect pannets to output
-  panNodeL = audioCtx.createStereoPanner();
-  panNodeL.pan.value = -1;
-  gainNodeL.connect(panNodeL);
-  panNodeL.connect(audioCtx.destination);
-  
-  panNodeR = audioCtx.createStereoPanner();
-  panNodeR.pan.value = 1;
-  gainNodeR.connect(panNodeR);
-  panNodeR.connect(audioCtx.destination);
-  
-  // set defaults
-  oscillatorL.type = oscillatorR.type = 'sine';
-  oscillatorL.frequency.value = oscillatorR.frequency.value = 440;
-  gainNodeL.gain.value = gainNodeR.gain.value = 0;
-  
-  // start the oscillator
-  oscillatorL.start(0);
-  oscillatorR.start(0);
+
+function initializeAudio() {
+    if (!audioInitialized) {
+        audioInitialized = true;
+        AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContext();
+
+        oscillatorL = audioCtx.createOscillator();
+        oscillatorR = audioCtx.createOscillator();
+
+        // connect gain
+        gainNodeL = audioCtx.createGain();
+        oscillatorL.connect(gainNodeL);
+
+        gainNodeR = audioCtx.createGain();
+        oscillatorR.connect(gainNodeR);
+
+        // split channels
+        mergerNode = audioCtx.createChannelMerger(2);
+        mergerNode.connect(audioCtx.destination);
+        gainNodeL.connect(mergerNode, 0, 0);
+        gainNodeR.connect(mergerNode, 0, 1);
+
+        // set defaults
+        oscillatorL.type = oscillatorR.type = 'sine';
+        oscillatorL.frequency.value = oscillatorR.frequency.value = 440;
+        gainNodeL.gain.value = gainNodeR.gain.value = 0;
+
+        // start the oscillator
+        oscillatorL.start(0);
+        oscillatorR.start(0);
+    }
 }
 
 // handle all changes to the oscillator
 function setTone() {
-  if(!audioInitialized){
-    audioInitialized = true;
     initializeAudio();
-  }
-  
     if (tone.playing) {
-        if(tone.channels.left){
+        if (tone.channels.left) {
             gainNodeL.gain.value = tone.volume / 100;
         } else {
             gainNodeL.gain.value = 0;
         }
 
-        if(tone.channels.right){
+        if (tone.channels.right) {
             gainNodeR.gain.value = tone.volume / 100;
         } else {
             gainNodeR.gain.value = 0;
@@ -76,7 +73,7 @@ function setTone() {
     oscillatorL.frequency.value = oscillatorR.frequency.value = tone.frequency;
     oscillatorL.type = oscillatorR.type = tone.waveform;
 
-    if(tone.waveform == 'sine'){
+    if (tone.waveform == 'sine') {
         $('input[name="phase"]').attr('disabled', false);
 
         // set the phase -- thanks to https://medium.com/web-audio/phase-offsets-with-web-audio-wavetables-c7dc85ac3218#.a6fr0iid8
@@ -103,3 +100,5 @@ function setTone() {
 
     drawStatus();
 }
+
+document.ontouchend = document.onmousedown = initializeAudio;
