@@ -1,4 +1,4 @@
-$('#play').on('click', function() {
+$('#play').on('mousedown', function() {
     $('#play').hide();
     $('#pause').show();
     tone.playing = true;
