@@ -9,22 +9,31 @@ $('#pause').on('click', function() {
 });
 
 // handle speaker selection
-$('#rightChannel #leftChannel').on('click', function() {
-    tone.channels.right = tone.channels.left = false;
+$('#rightChannel').on('click', function() {
     if ($('#rightChannel').prop('checked')) {
         tone.channels.right = true;
+    } else {
+        tone.channels.right = false;
     }
+    setTone();
+});
 
+$('#leftChannel').on('click', function() {
     if ($('#leftChannel').prop('checked')) {
         tone.channels.left = true;
+    } else {
+        tone.channels.left = false;
     }
-
     setTone();
 });
 
 // set waveform and phase
-$('#waveformSelection #phaseSelection').on('change', function() {
+$('#waveformSelection').on('change', function() {
     tone.waveform = $("input[name='waveform']:checked")[0].value;
+    setTone();
+});
+
+$('#phaseSelection').on('change', function() {
     tone.phase = $("input[name='phase']:checked")[0].value;
     setTone();
 });
@@ -39,7 +48,7 @@ $('#volume').on('input', function() {
 $('#frequency').on('input', function() {
     // cancel macros if we're going freeform
     stopMacros();
-    
+
     tone.frequency = Number($('#frequency').val());
     setTone();
 });
