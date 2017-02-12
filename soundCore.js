@@ -15,6 +15,7 @@ var tone = {
 // iOS won't let us generate sound unless it's based directly on user interaction
 var AudioContext, audioCtx, oscillatorL, oscillatorR, gainNodeL, gainNodeR, mergerNode;
 var audioInitialized = false;
+
 function initializeAudio() {
     if (!audioInitialized) {
         audioInitialized = true;

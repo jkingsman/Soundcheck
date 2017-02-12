@@ -1,4 +1,4 @@
-function playTone(frequency){
+function playTone(frequency) {
     $('#frequency').val(frequency);
     tone.frequency = frequency;
     tone.playing = true;
@@ -6,16 +6,17 @@ function playTone(frequency){
 }
 
 var sweepInterval;
-function sweep(startFreq, endFreq, seconds){
+
+function sweep(startFreq, endFreq, seconds) {
     // start with a clean slate
     clearInterval(sweepInterval);
 
     var interval = endFreq - startFreq;
     var step = interval / (seconds * 100);
     playTone(startFreq);
-    sweepInterval = setInterval(function(){
+    sweepInterval = setInterval(function() {
         playTone(tone.frequency + step);
-        if(tone.frequency > endFreq){
+        if (tone.frequency > endFreq) {
             playTone(endFreq);
             clearInterval(sweepInterval);
             tone.playing = false;
@@ -25,15 +26,16 @@ function sweep(startFreq, endFreq, seconds){
 }
 
 var pulseInterval;
-function LRPulse(){
+
+function LRPulse() {
     // set base case
     var pulse = 1;
     tone.channels.left = true;
     tone.channels.right = false;
     playTone(300);
 
-    pulseInterval = setInterval(function(){
-        if(pulse === 0){
+    pulseInterval = setInterval(function() {
+        if (pulse === 0) {
             pulse = 1;
             $('#leftChannel').prop('checked', true);
             $('#rightChannel').prop('checked', false);
@@ -51,7 +53,7 @@ function LRPulse(){
     }, 1000);
 }
 
-function clearAllMacros(){
+function clearAllMacros() {
     clearInterval(sweepInterval);
     clearInterval(pulseInterval);
     $('#leftChannel').prop('checked', true);

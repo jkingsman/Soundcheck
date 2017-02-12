@@ -13,7 +13,8 @@
 }
 
 .container {
-        padding-bottom: 40px; /* Make room for foter */
+    /* Make room for footer */
+    padding-bottom: 40px;
 }
 
 #footer {

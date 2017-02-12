@@ -48,7 +48,7 @@ $('#frequency').on('input', function() {
 });
 
 function drawStatus() {
-    if(tone.playing){
+    if (tone.playing) {
         $('#play').hide();
         $('#pause').show();
     } else {
